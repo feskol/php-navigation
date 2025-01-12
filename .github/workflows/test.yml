@@ -16,12 +16,23 @@ on:
 jobs:
   unittest:
     runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        php-version: ['8.1', '8.2', '8.3' , '8.4']
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-version }}
+          extensions: mbstring, bcmath, intl, gd, opcache, dom, xml, json, tokenizer
+
       - name: Install Composer
-        run: composer install
+        run: composer install --prefer-dist --no-progress --no-suggest
 
       - name: Run php-unittest
         run: php vendor/bin/phpunit

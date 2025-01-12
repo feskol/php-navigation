@@ -17,7 +17,7 @@
 
 ## Overview
 
-A simple and effective PHP Class to manage active states in hierarchical navigation structures.
+A simple and effective Navigation to manage active states in navigation structures.
 
 ## Features
 
@@ -100,31 +100,13 @@ class MyCustomLink extends Link
 }
 ```
 
-And then you can use your `MyCustomLink` class:
+Then use your `MyCustomLink` class instead of the `Link` class:
 
 ```php
-use Feskol\Navigation\Navigation;
-
-$navigation = new Navigation();
-$navigation->setTitle('MyNavigation');
-
-// use your own MyCustomLink class
 $myCustomLink = new MyCustomLink();
 $myCustomLink->setTitle('Company')
     ->setHref('/company')
-    ->setIcon('bi bi-user'); // Bootstrap-Icon classes 
-
-// add the created $navLink to the Navigation
-$navigation->addLink($myCustomLink);
-```
-
-Iterating through Navigation links with your new `getIcon()` method:
-
-```php
-foreach ($navigation->getLinks() as $link){
-    echo $link->getTitle(); // "Company"
-    echo $link->getIcon(); // "bi bi-user"
-}
+    ->setIcon('bi bi-user'); // Bootstrap-Icon classes
 ```
 
 ## Handling translations
@@ -190,6 +172,16 @@ Before submitting a pull request, please sign the CLA using the following link:
 Contributions cannot be merged unless the CLA is signed.
 
 Thank you for your contributions and for helping us build something great!
+
+## Testing
+
+We're using phpunit.
+
+Run tests:
+
+```bash
+php vendor/bin/phpunit
+```
 
 ## ❤️ Support This Project
 

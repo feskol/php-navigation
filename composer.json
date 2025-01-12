@@ -1,6 +1,6 @@
 {
     "name": "feskol/php-navigation",
-    "description": "A simple and effective PHP Class to manage active states in navigation structures.",
+    "description": "A simple and effective Navigation to manage active states in navigation structures.",
     "type": "library",
     "keywords": [
         "navigation",

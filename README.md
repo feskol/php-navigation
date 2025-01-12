@@ -1,10 +1,15 @@
 # PHP-Navigation
 
-![GitHub Release](https://img.shields.io/github/v/release/feskol/php-navigation)
-![GitHub License][license]
-![Packagist Downloads](https://img.shields.io/packagist/dt/feskol/php-navigation)
+[![GitHub Release][releases-badge]][releases-link]
+![GitHub License][license-badge]
+[![Packagist Downloads][packagist-badge]][packagist-link]
 
-[license]: https://img.shields.io/github/license/feskol/php-navigation
+[releases-badge]: https://img.shields.io/github/v/release/feskol/php-navigation
+[releases-link]: https://github.com/feskol/php-navigation/releases
+[license-badge]: https://img.shields.io/github/license/feskol/php-navigation
+[packagist-badge]: https://img.shields.io/packagist/dt/feskol/php-navigation
+[packagist-link]: https://packagist.org/packages/feskol/php-navigation
+
 [support-buy-me-coffee]: https://buymeacoffee.com/feskol
 [support-badge-buy-me-coffee]: https://img.shields.io/badge/Buy%20Me%20a%20Coffee-ffdd00?&logo=buy-me-a-coffee&logoColor=black
 [support-paypal-me]: https://paypal.me/feskol
@@ -12,7 +17,7 @@
 
 ## Overview
 
-A simple and effective PHP library to manage active states in hierarchical navigation structures.
+A simple and effective PHP Class to manage active states in hierarchical navigation structures.
 
 ## Features
 
@@ -74,8 +79,8 @@ foreach ($navigation->getLinks() as $link){
 
 ### Additional Data
 
-Often there are cases where you need additional data for your navigation, for example, Icons or Images.  
-The best way would be to create your own `MyCustomLink`-class that extends the `Link` class.
+There are often situations where you need additional data for your navigation, such as icons or images.
+The best approach is to create your own `MyCustomLink` class that extends the `Link` class.
 
 ```php
 use Feskol\Navigation\Link;
@@ -95,7 +100,7 @@ class MyCustomLink extends Link
 }
 ```
 
-And then you can use it like the Link:
+And then you can use your `MyCustomLink` class:
 
 ```php
 use Feskol\Navigation\Navigation;
@@ -107,13 +112,13 @@ $navigation->setTitle('MyNavigation');
 $myCustomLink = new MyCustomLink();
 $myCustomLink->setTitle('Company')
     ->setHref('/company')
-    ->setIcon('bi bi-user'); // I'm using here the Bootstrap-Icon classes 
+    ->setIcon('bi bi-user'); // Bootstrap-Icon classes 
 
 // add the created $navLink to the Navigation
 $navigation->addLink($myCustomLink);
 ```
 
-Iterating through Navigation links:
+Iterating through Navigation links with your new `getIcon()` method:
 
 ```php
 foreach ($navigation->getLinks() as $link){

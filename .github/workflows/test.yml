@@ -1,0 +1,26 @@
+#----------------------------------------------------------
+# This file is part of the php-navigation project.
+#
+# (c) Festim Kolgeci <festim.kolgei@pm.me>
+#
+# For complete copyright and license details, please refer
+# to the LICENSE file distributed with this source code.
+#----------------------------------------------------------
+
+name: Test
+
+on:
+  push:
+
+jobs:
+  unittest:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install Composer
+        run: composer install
+
+      - name: Run php-unittest
+        run: php vendor/bin/phpunit

@@ -1,0 +1,37 @@
+{
+    "name": "feskol/php-navigation",
+    "description": "A simple and effective Navigation to manage active states in navigation structures.",
+    "type": "library",
+    "keywords": [
+        "navigation",
+        "navigation-active-state",
+        "navigation-helper"
+    ],
+    "authors": [
+        {
+            "name": "Festim Kolgeci",
+            "email": "festim.kolgeci@pm.me"
+        }
+    ],
+    "license": "MIT",
+    "require": {
+        "php": "^8.1"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^10.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "Feskol\\Navigation\\": "src/"
+        },
+        "exclude-from-classmap": [
+            "/tests/"
+        ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Feskol\\Tests\\": "tests/"
+        }
+    },
+    "minimum-stability": "stable"
+}

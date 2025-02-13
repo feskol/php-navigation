@@ -13,7 +13,7 @@ namespace Feskol\Navigation;
 use Feskol\Navigation\Contracts\HyperLinkInterface;
 
 /**
- * Abstract class providing functionality for the <a>-tag
+ * Abstract class providing an implementation for the <a>-tag
  *
  * @see https://www.w3schools.com/tags/tag_a.asp
  */
@@ -70,6 +70,12 @@ abstract class AbstractHyperLink implements HyperLinkInterface
     public function setTarget(?string $target): static
     {
         $this->target = $target;
+        return $this;
+    }
+
+    public function setTargetBlank(): static
+    {
+        $this->target = '_blank';
         return $this;
     }
 

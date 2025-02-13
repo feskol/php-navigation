@@ -20,7 +20,8 @@ A simple and effective Navigation to manage active states in navigation structur
 
 ## Features
 
-- Automatically marks parent navigation items as active when a child link is active.
+- Automatically tracks a link's active status and makes it easy to check if a parent navigation item has active child
+  links.
 - Easy to set up and integrate into existing projects.
 - Flexible and extensible for complex navigation structures.
 
@@ -67,14 +68,40 @@ Iterating through Navigation links:
 ```php
 foreach ($navigation->getLinks() as $link){
     echo $link->getTitle(); // "Company"
-    echo $link->isActive() ? 'active' : 'inactive'; // "active" - because the child is active
+    echo $link->hasActiveChildren(); // "true" - because the child is active
     
     foreach($link->getChildren() as $subLink){
         echo $link->getTitle(); // "About us"
-        echo $link->isActive() ? 'active' : 'inactive'; // "active"
+        echo $link->isActive(); // "true"
     }
 }
 ```
+
+### Common link data
+
+The `Link` class provides setter and getter methods for the common attributes of an `<a>`-tag.  
+The most commonly used ones are `href=""` and `target=""`:
+
+```php
+use Feskol\Navigation\Link;
+
+$link = new Link();
+
+// href
+$link->setHref('/company/about-us');
+$link->getHref(); // "/company/about-us"
+
+// target
+$link->setTarget('_top');
+$link->getTarget(); // "_top"
+
+// for the common use of target="_blank" you can use:
+$link->setTargetBlank();
+$link->getTarget(); // "_blank"
+```
+
+To view all available methods for the common link data, check out the
+[`AbsctractHyperLink` class](https://github.com/feskol/php-navigation/blob/main/src/AbstractHyperLink.php).
 
 ### Additional Data
 
@@ -102,15 +129,15 @@ class MyCustomLink extends Link
 Then use your `MyCustomLink` class instead of the `Link` class:
 
 ```php
-$myCustomLink = new MyCustomLink();
-$myCustomLink->setTitle('Company')
+$link = new MyCustomLink();
+$link->setTitle('Company')
     ->setHref('/company')
     ->setIcon('bi bi-user'); // For example, using Bootstrap-Icon classes
 ```
 
-## Handling translations
+## Handling translations in your frontend
 
-### Symfony (or other Frameworks)
+### Symfony
 
 In Symfony, you can use the `TranslatableMessage` class to hold translation infos which you can use in your frontend.  
 In Twig, apply the `|trans` filter to translate the `TranslatableMessage`.

@@ -50,14 +50,20 @@ class LinkTest extends TestCase
 
         $this->assertSame(0, $mainLink->getActiveChildrenCount());
         $this->assertSame(0, $childLink->getActiveChildrenCount());
+        $this->assertFalse($mainLink->hasActiveChildren());
+        $this->assertFalse($childLink->hasActiveChildren());
 
         $childLink->addChild($activeChildLink);
 
         $this->assertSame(1, $mainLink->getActiveChildrenCount());
         $this->assertSame(1, $childLink->getActiveChildrenCount());
 
-        $this->assertTrue($childLink->isActive());
-        $this->assertTrue($mainLink->isActive());
+        $this->assertFalse($mainLink->isActive());
+        $this->assertFalse($childLink->isActive());
+        $this->assertTrue($mainLink->hasActiveChildren());
+        $this->assertTrue($childLink->hasActiveChildren());
+
+        $this->assertTrue($activeChildLink->isActive());
     }
 
     public function testActiveStatusPropagationWithoutSetChildren(): void
@@ -74,7 +80,8 @@ class LinkTest extends TestCase
         $childLink->addChild($activeChildLink);
 
         $this->assertTrue($activeChildLink->isActive());
-        $this->assertTrue($childLink->isActive());
+        $this->assertFalse($childLink->isActive());
+        $this->assertTrue($childLink->hasActiveChildren());
 
         $this->assertSame(1, $mainLink->getActiveChildrenCount());
         $this->assertSame(1, $childLink->getActiveChildrenCount());
@@ -84,7 +91,8 @@ class LinkTest extends TestCase
         $this->assertSame(1, $mainLink->getActiveChildrenCount());
         $this->assertSame(1, $childLink->getActiveChildrenCount());
 
-        $this->assertTrue($mainLink->isActive());
+        $this->assertFalse($mainLink->isActive());
+        $this->assertTrue($mainLink->hasActiveChildren());
     }
 
     public function testActiveStatusUpdatePropagation(): void
@@ -103,8 +111,11 @@ class LinkTest extends TestCase
         $this->assertSame(1, $mainLink->getActiveChildrenCount());
         $this->assertSame(1, $childLink->getActiveChildrenCount());
 
-        $this->assertTrue($mainLink->isActive());
-        $this->assertTrue($childLink->isActive());
+        $this->assertFalse($mainLink->isActive());
+        $this->assertFalse($childLink->isActive());
+        $this->assertTrue($mainLink->hasActiveChildren());
+        $this->assertTrue($childLink->hasActiveChildren());
+
         $this->assertTrue($lastChildLink->isActive());
     }
 
@@ -114,9 +125,13 @@ class LinkTest extends TestCase
         $childLink = (new Link())->addChild($lastChildLink);
         $mainLink = (new Link())->addChild($childLink);
 
-        $this->assertTrue($mainLink->isActive());
-        $this->assertTrue($childLink->isActive());
+        $this->assertFalse($mainLink->isActive());
+        $this->assertFalse($childLink->isActive());
         $this->assertTrue($lastChildLink->isActive());
+
+        $this->assertTrue($mainLink->hasActiveChildren());
+        $this->assertTrue($childLink->hasActiveChildren());
+        $this->assertFalse($lastChildLink->hasActiveChildren());
 
         $this->assertSame(1, $mainLink->getActiveChildrenCount());
         $this->assertSame(1, $childLink->getActiveChildrenCount());
@@ -128,6 +143,8 @@ class LinkTest extends TestCase
 
         $this->assertFalse($childLink->isActive());
         $this->assertFalse($mainLink->isActive());
+        $this->assertFalse($childLink->hasActiveChildren());
+        $this->assertFalse($mainLink->hasActiveChildren());
     }
 
     public function testInActiveStatusPropagation(): void
@@ -136,8 +153,8 @@ class LinkTest extends TestCase
         $childLink = (new Link())->addChild($lastChildLink);
         $mainLink = (new Link())->addChild($childLink);
 
-        $this->assertTrue($mainLink->isActive());
-        $this->assertTrue($childLink->isActive());
+        $this->assertTrue($mainLink->hasActiveChildren());
+        $this->assertTrue($childLink->hasActiveChildren());
         $this->assertTrue($lastChildLink->isActive());
 
         $this->assertSame(1, $mainLink->getActiveChildrenCount());
@@ -149,8 +166,8 @@ class LinkTest extends TestCase
         $this->assertSame(0, $childLink->getActiveChildrenCount());
 
         $this->assertFalse($lastChildLink->isActive());
-        $this->assertFalse($childLink->isActive());
-        $this->assertFalse($mainLink->isActive());
+        $this->assertFalse($childLink->hasActiveChildren());
+        $this->assertFalse($mainLink->hasActiveChildren());
     }
 
     public function testCorrectActiveChildrenCountWithMultipleChildren(): void
@@ -378,14 +395,24 @@ class LinkTest extends TestCase
     {
         $mainLink = new Link();
 
+        $this->assertSame(0, $mainLink->getActiveChildrenCount());
+
         $firstLink = (new Link())->setIsActive(true);
         $secondLink = (new Link())->setIsActive(true);
         $mainLink->setChildren([$firstLink, $secondLink]);
+
+        $this->assertSame(2, $mainLink->getActiveChildrenCount());
+        $this->assertSame(0, $firstLink->getActiveChildrenCount());
+        $this->assertSame(0, $secondLink->getActiveChildrenCount());
 
         $firstLinkChild1 = (new Link())->setIsActive(true);
         $firstLinkChild2 = (new Link())->setIsActive(true);
         $firstLinkChild3 = new Link();
         $firstLink->setChildren([$firstLinkChild1, $firstLinkChild2, $firstLinkChild3]);
+
+        $this->assertSame(2, $mainLink->getActiveChildrenCount());
+        $this->assertSame(2, $firstLink->getActiveChildrenCount());
+        $this->assertSame(0, $secondLink->getActiveChildrenCount());
 
         $secondLinkChild1 = new Link();
         $secondLinkChild2 = (new Link())->setisActive(true);
@@ -406,9 +433,43 @@ class LinkTest extends TestCase
         $updatedSecondLinkChild3 = new Link();
         $secondLink->setChildren([$updatedSecondLinkChild1, $updatedSecondLinkChild2, $updatedSecondLinkChild3]);
 
-        $this->assertSame(1, $mainLink->getActiveChildrenCount());
+        $this->assertSame(2, $mainLink->getActiveChildrenCount());
         $this->assertSame(1, $firstLink->getActiveChildrenCount());
         $this->assertSame(0, $secondLink->getActiveChildrenCount());
+    }
+
+    public function testRemoveChildWithActiveChildren(): void
+    {
+        $mainLink = new Link();
+
+        $this->assertSame(0, $mainLink->getActiveChildrenCount());
+
+        $firstLink = (new Link())->setIsActive(true);
+        $secondLink = (new Link())->setIsActive(true);
+        $mainLink->setChildren([$firstLink, $secondLink]);
+
+        $this->assertSame(2, $mainLink->getActiveChildrenCount());
+        $this->assertSame(0, $firstLink->getActiveChildrenCount());
+        $this->assertSame(0, $secondLink->getActiveChildrenCount());
+
+        $firstLinkChild1 = (new Link())->setIsActive(true);
+        $firstLinkChild2 = (new Link())->setIsActive(true);
+        $firstLinkChild3 = new Link();
+        $firstLink->setChildren([$firstLinkChild1, $firstLinkChild2, $firstLinkChild3]);
+
+        $secondLinkChild1 = new Link();
+        $secondLinkChild2 = (new Link())->setisActive(true);
+        $secondLinkChild3 = (new Link())->setisActive(true);
+        $secondLink->setChildren([$secondLinkChild1, $secondLinkChild2, $secondLinkChild3]);
+
+        $this->assertSame(2, $mainLink->getActiveChildrenCount());
+        $this->assertSame(2, $firstLink->getActiveChildrenCount());
+        $this->assertSame(2, $secondLink->getActiveChildrenCount());
+
+        $mainLink->removeChild($firstLink);
+
+        $this->assertSame(1, $mainLink->getActiveChildrenCount());
+        $this->assertSame(2, $secondLink->getActiveChildrenCount());
     }
 
     public function testParentAssignment(): void

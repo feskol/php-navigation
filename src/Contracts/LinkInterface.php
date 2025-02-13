@@ -14,7 +14,7 @@ namespace Feskol\Navigation\Contracts;
 /**
  * Represents a navigation link
  */
-interface LinkInterface
+interface LinkInterface extends HierarchicalLinkInterface
 {
     /**
      * Retrieves the title of the link.
@@ -29,4 +29,11 @@ interface LinkInterface
      * @return bool True if the link is active, false otherwise.
      */
     public function isActive(): bool;
+
+    /**
+     * Checks if the link has children with active status 'true'.
+     *
+     * @return bool
+     */
+    public function hasActiveChildren(): bool;
 }

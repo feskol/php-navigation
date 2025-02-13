@@ -10,14 +10,13 @@
 
 namespace Feskol\Navigation;
 
-use Feskol\Navigation\Contracts\HierarchicalLinkInterface;
 use Feskol\Navigation\Contracts\HyperLinkInterface;
 use Feskol\Navigation\Contracts\LinkInterface;
 
 /**
  * Represents a navigation link with hierarchical structure and active status.
  */
-class Link extends AbstractHyperLink implements LinkInterface, HierarchicalLinkInterface, HyperLinkInterface
+class Link extends AbstractHyperLink implements LinkInterface, HyperLinkInterface
 {
     private \Stringable|string|null $title = null;
 
@@ -96,18 +95,15 @@ class Link extends AbstractHyperLink implements LinkInterface, HierarchicalLinkI
      */
     private function recursiveAddActiveStatus(): void
     {
+        // only propagate up if it's the first time, so we ensure that the parent tracks
+        // only the active status of the direct child
+        if ($this->activeChildrenCount === 0 && !$this->isActive() && $this->hasParent()) {
+            $this->parent->recursiveAddActiveStatus();
+        }
+
         // increment activeChildrenCount
         if ($this->hasChildren()) {
             $this->activeChildrenCount++;
-        }
-
-        // only update parents recursive, if active-status was false
-        if (!$this->isActive) {
-            $this->isActive = true;
-
-            if ($this->hasParent()) {
-                $this->parent->recursiveAddActiveStatus();
-            }
         }
     }
 
@@ -125,13 +121,8 @@ class Link extends AbstractHyperLink implements LinkInterface, HierarchicalLinkI
             $this->activeChildrenCount--;
 
             // If no active children left, set the current link as inactive
-            if ($this->activeChildrenCount === 0) {
-                $this->isActive = false;
-
-                // Recursively remove active-status from the parent
-                if ($this->hasParent()) {
-                    $this->parent->recursiveRemoveActiveStatus();
-                }
+            if ($this->activeChildrenCount === 0 && !$this->isActive() && $this->hasParent()) {
+                $this->parent->recursiveRemoveActiveStatus();
             }
         }
     }
@@ -203,8 +194,8 @@ class Link extends AbstractHyperLink implements LinkInterface, HierarchicalLinkI
         // add the link
         $this->children[] = $child;
 
-        // If the child is active, it updates the parent's active status.
-        if ($child->isActive()) {
+        // If the child is active or has active children, it updates the parent's activeChildren status.
+        if ($child->isActive() || $child->hasActiveChildren()) {
             $this->recursiveAddActiveStatus();
         }
 
@@ -226,8 +217,8 @@ class Link extends AbstractHyperLink implements LinkInterface, HierarchicalLinkI
             // unset child parent
             $child->parent = null;
 
-            // If the child was active, it updates the parent's active status accordingly.
-            if ($child->isActive()) {
+            // If the child was active or had active children, it updates the parent's activeChildren accordingly.
+            if ($child->isActive() || $child->hasActiveChildren()) {
                 $this->recursiveRemoveActiveStatus();
             }
 
@@ -246,5 +237,13 @@ class Link extends AbstractHyperLink implements LinkInterface, HierarchicalLinkI
     public function getActiveChildrenCount(): int
     {
         return $this->activeChildrenCount;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function hasActiveChildren(): bool
+    {
+        return $this->activeChildrenCount > 0;
     }
 }

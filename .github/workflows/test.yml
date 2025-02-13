@@ -29,7 +29,6 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php-version }}
-          extensions: mbstring, bcmath, intl, gd, opcache, dom, xml, json, tokenizer
 
       - name: Install Composer
         run: composer install --prefer-dist --no-progress --no-suggest

@@ -10,13 +10,12 @@
 
 namespace Feskol\Navigation;
 
-use Feskol\Navigation\Contracts\HyperLinkInterface;
 use Feskol\Navigation\Contracts\LinkInterface;
 
 /**
  * Represents a navigation link with hierarchical structure and active status.
  */
-class Link extends AbstractHyperLink implements LinkInterface, HyperLinkInterface
+class Link extends AbstractHyperLink implements LinkInterface
 {
     private \Stringable|string|null $title = null;
 

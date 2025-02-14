@@ -14,7 +14,7 @@ namespace Feskol\Navigation\Contracts;
 /**
  * Represents a navigation link
  */
-interface LinkInterface extends HierarchicalLinkInterface
+interface LinkInterface extends HierarchicalLinkInterface, HyperLinkInterface
 {
     /**
      * Retrieves the title of the link.

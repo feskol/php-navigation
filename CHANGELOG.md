@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.0.1 - (2025-02-14)
+
+- `LinkInterface` now extends `HyperLinkInterface`
+
 ## 2.0.0 - (2025-02-13)
 
 **⚠ Behavior Change: ⚠**  

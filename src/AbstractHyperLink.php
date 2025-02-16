@@ -140,7 +140,7 @@ abstract class AbstractHyperLink implements HyperLinkInterface
      */
     public function getPing(): ?string
     {
-        return join(' ', $this->ping);
+        return $this->ping ? join(' ', $this->ping) : null;
     }
 
     /**

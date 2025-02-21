@@ -63,10 +63,7 @@ class Navigation implements NavigationInterface
     }
 
     /**
-     * Adds a new link to the navigation.
-     *
-     * @param LinkInterface $link
-     * @return $this
+     * @inheritDoc
      */
     public function addLink(LinkInterface $link): static
     {
@@ -76,10 +73,7 @@ class Navigation implements NavigationInterface
     }
 
     /**
-     * Removes a link from the navigation.
-     *
-     * @param LinkInterface $link
-     * @return $this
+     * @inheritDoc
      */
     public function removeLink(LinkInterface $link): static
     {

@@ -39,4 +39,20 @@ interface NavigationInterface
      * @param LinkInterface[] $links
      */
     public function setLinks(array $links): static;
+
+    /**
+     * Adds a new link to the navigation.
+     *
+     * @param LinkInterface $link
+     * @return $this
+     */
+    public function addLink(LinkInterface $link): static;
+
+    /**
+     * Removes a link from the navigation.
+     *
+     * @param LinkInterface $link
+     * @return $this
+     */
+    public function removeLink(LinkInterface $link): static;
 }

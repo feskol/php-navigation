@@ -159,10 +159,7 @@ class Link extends AbstractHyperLink implements LinkInterface
     }
 
     /**
-     * Sets the children of the link.
-     *
-     * @param static[] $children An array of child links to set.
-     * @return $this
+     * @inheritDoc
      */
     public function setChildren(array $children): static
     {
@@ -180,10 +177,7 @@ class Link extends AbstractHyperLink implements LinkInterface
     }
 
     /**
-     * Adds a child link to the current link.
-     *
-     * @param LinkInterface $child The child link to add.
-     * @return $this
+     * @inheritDoc
      */
     public function addChild(LinkInterface $child): static
     {
@@ -202,10 +196,7 @@ class Link extends AbstractHyperLink implements LinkInterface
     }
 
     /**
-     * Removes a child link from the current link.
-     *
-     * @param LinkInterface $child The child link to remove.
-     * @return $this
+     * @inheritDoc
      */
     public function removeChild(LinkInterface $child): static
     {

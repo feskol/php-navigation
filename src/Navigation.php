@@ -12,7 +12,6 @@ namespace Feskol\Navigation;
 
 use Feskol\Navigation\Contracts\LinkInterface;
 use Feskol\Navigation\Contracts\NavigationInterface;
-use Stringable;
 
 /**
  * Represents a navigation structure that contains a collection of links.
@@ -20,9 +19,9 @@ use Stringable;
 class Navigation implements NavigationInterface
 {
     /**
-     * @var Stringable|string|null The title of the navigation.
+     * @var \Stringable|string|null The title of the navigation.
      */
-    private Stringable|string|null $title = null;
+    private \Stringable|string|null $title = null;
 
     /**
      * @var LinkInterface[] List of navigation links.
@@ -32,18 +31,15 @@ class Navigation implements NavigationInterface
     /**
      * @inheritDoc
      */
-    public function getTitle(): Stringable|string|null
+    public function getTitle(): \Stringable|string|null
     {
         return $this->title;
     }
 
     /**
-     * Sets the title of the navigation.
-     *
-     * @param Stringable|string|null $title
-     * @return $this
+     * @inheritDoc
      */
-    public function setTitle(Stringable|string|null $title): static
+    public function setTitle(\Stringable|string|null $title): static
     {
         $this->title = $title;
         return $this;
@@ -58,10 +54,7 @@ class Navigation implements NavigationInterface
     }
 
     /**
-     * Sets the list of links in the navigation.
-     *
-     * @param LinkInterface[] $links
-     * @return $this
+     * @inheritDoc
      */
     public function setLinks(array $links): static
     {

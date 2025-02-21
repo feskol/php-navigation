@@ -10,7 +10,6 @@
 
 namespace Feskol\Navigation\Contracts;
 
-use Stringable;
 
 /**
  * Represents a navigation structure that contains a collection of links.
@@ -19,10 +18,13 @@ interface NavigationInterface
 {
     /**
      * Gets the title of the navigation.
-     *
-     * @return Stringable|string|null
      */
-    public function getTitle(): Stringable|string|null;
+    public function getTitle(): \Stringable|string|null;
+
+    /**
+     * Sets the title of the navigation.
+     */
+    public function setTitle(\Stringable|string|null $title): static;
 
     /**
      * Gets the list of links in the navigation.
@@ -30,4 +32,11 @@ interface NavigationInterface
      * @return LinkInterface[]
      */
     public function getLinks(): array;
+
+    /**
+     * Sets the list of links in the navigation.
+     *
+     * @param LinkInterface[] $links
+     */
+    public function setLinks(array $links): static;
 }

@@ -39,6 +39,9 @@ abstract class AbstractHyperLink implements HyperLinkInterface
         return $this->href;
     }
 
+    /**
+     * @inheritDoc
+     */
     public function setHref(?string $href): static
     {
         $this->href = $href;
@@ -53,6 +56,9 @@ abstract class AbstractHyperLink implements HyperLinkInterface
         return $this->hreflang;
     }
 
+    /**
+     * @inheritDoc
+     */
     public function setHreflang(?string $hreflang): static
     {
         $this->hreflang = $hreflang;
@@ -67,6 +73,9 @@ abstract class AbstractHyperLink implements HyperLinkInterface
         return $this->target;
     }
 
+    /**
+     * @inheritDoc
+     */
     public function setTarget(?string $target): static
     {
         $this->target = $target;
@@ -87,6 +96,9 @@ abstract class AbstractHyperLink implements HyperLinkInterface
         return $this->rel;
     }
 
+    /**
+     * @inheritDoc
+     */
     public function setRel(?string $rel): static
     {
         $this->rel = $rel;
@@ -101,6 +113,9 @@ abstract class AbstractHyperLink implements HyperLinkInterface
         return $this->type;
     }
 
+    /**
+     * @inheritDoc
+     */
     public function setType(?string $type): static
     {
         $this->type = $type;
@@ -115,6 +130,9 @@ abstract class AbstractHyperLink implements HyperLinkInterface
         return $this->referrerPolicy;
     }
 
+    /**
+     * @inheritDoc
+     */
     public function setReferrerPolicy(?string $referrerPolicy): static
     {
         $this->referrerPolicy = $referrerPolicy;
@@ -129,6 +147,9 @@ abstract class AbstractHyperLink implements HyperLinkInterface
         return $this->media;
     }
 
+    /**
+     * @inheritDoc
+     */
     public function setMedia(?string $media): static
     {
         $this->media = $media;
@@ -144,21 +165,26 @@ abstract class AbstractHyperLink implements HyperLinkInterface
     }
 
     /**
-     * @param array<string>|null $ping
-     * @return $this
+     * @inheritDoc
      */
-    public function setPing(?array $ping): static
+    public function setPing(?string $ping): static
     {
-        $this->ping = $ping;
+        $this->ping = explode(' ', $ping);
         return $this;
     }
 
+    /**
+     * @inheritDoc
+     */
     public function addPing(string $url): static
     {
         $this->ping[] = $url;
         return $this;
     }
 
+    /**
+     * @inheritDoc
+     */
     public function removePing(string $url): static
     {
         $this->ping = array_diff($this->ping, [$url]);
@@ -173,6 +199,9 @@ abstract class AbstractHyperLink implements HyperLinkInterface
         return $this->isDownload;
     }
 
+    /**
+     * @inheritDoc
+     */
     public function setIsDownload(bool $isDownload): static
     {
         $this->isDownload = $isDownload;

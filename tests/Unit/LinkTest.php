@@ -529,4 +529,33 @@ class LinkTest extends TestCase
         $this->assertNull($secondLink->getParent());
         $this->assertNull($thirdLink->getParent());
     }
+
+    public function testGetNestedChildren(): void
+    {
+        $mainLink = new Link();
+
+        $firstLink = new Link();
+        $secondLink = new Link();
+        $mainLink->setChildren([$firstLink, $secondLink]);
+
+        $firstLinkChild1 = new Link();
+        $firstLinkChild2 = new Link();
+        $firstLinkChild3 = new Link();
+        $firstLink->setChildren([
+            $firstLinkChild1,
+            $firstLinkChild2,
+            $firstLinkChild3,
+        ]);
+
+        $secondLinkChild1 = new Link();
+        $secondLinkChild2 = new Link();
+        $secondLink->setChildren([
+            $secondLinkChild1,
+            $secondLinkChild2,
+        ]);
+
+        $this->assertCount(2, $mainLink->getChildren());
+        $this->assertCount(3, $mainLink->getChildren()[0]->getChildren());
+        $this->assertCount(2, $mainLink->getChildren()[1]->getChildren());
+    }
 }

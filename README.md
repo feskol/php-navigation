@@ -3,6 +3,7 @@
 [![GitHub Release][releases-badge]][releases-link]
 ![GitHub License][license-badge]
 [![Packagist Downloads][packagist-badge]][packagist-link]
+[![codecov](https://codecov.io/gh/feskol/php-navigation/graph/badge.svg?token=ZJ6ZQ8AUGY)](https://codecov.io/gh/feskol/php-navigation)
 
 [releases-badge]: https://img.shields.io/github/v/release/feskol/php-navigation
 [releases-link]: https://github.com/feskol/php-navigation/releases

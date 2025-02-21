@@ -73,12 +73,6 @@ abstract class AbstractHyperLink implements HyperLinkInterface
         return $this;
     }
 
-    public function setTargetBlank(): static
-    {
-        $this->target = '_blank';
-        return $this;
-    }
-
     /**
      * @inheritDoc
      */

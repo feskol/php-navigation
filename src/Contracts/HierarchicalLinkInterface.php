@@ -45,4 +45,28 @@ interface HierarchicalLinkInterface
      * @return bool
      */
     public function hasChildren(): bool;
+
+    /**
+     * Sets the children of the link.
+     *
+     * @param LinkInterface[] $children
+     * @return $this
+     */
+    public function setChildren(array $children): static;
+
+    /**
+     * Adds a child link to the current link.
+     *
+     * @param LinkInterface $child
+     * @return $this
+     */
+    public function addChild(LinkInterface $child): static;
+
+    /**
+     * Removes a child link from the current link.
+     *
+     * @param LinkInterface $child
+     * @return $this
+     */
+    public function removeChild(LinkInterface $child): static;
 }

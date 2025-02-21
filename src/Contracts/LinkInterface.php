@@ -24,11 +24,21 @@ interface LinkInterface extends HierarchicalLinkInterface, HyperLinkInterface
     public function getTitle(): \Stringable|string|null;
 
     /**
+     * Sets the title
+     */
+    public function setTitle(\Stringable|string|null $title): static;
+
+    /**
      * Checks if the link is active.
      *
      * @return bool True if the link is active, false otherwise.
      */
     public function isActive(): bool;
+
+    /**
+     * Sets the active status of the link.
+     */
+    public function setIsActive(bool $isActive): static;
 
     /**
      * Checks if the link has children with active status 'true'.

@@ -95,10 +95,6 @@ $link->getHref(); // "/company/about-us"
 // target
 $link->setTarget('_top');
 $link->getTarget(); // "_top"
-
-// for the common use of target="_blank" you can use:
-$link->setTargetBlank();
-$link->getTarget(); // "_blank"
 ```
 
 To view all available methods for the common link data, check out the

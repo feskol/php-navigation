@@ -93,8 +93,8 @@ $link->setHref('/company/about-us');
 $link->getHref(); // "/company/about-us"
 
 // target
-$link->setTarget('_top');
-$link->getTarget(); // "_top"
+$link->setTarget(Link::TARGET_BLANK);
+$link->getTarget(); // "_blank"
 ```
 
 To view all available methods for the common link data, check out the

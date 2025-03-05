@@ -17,7 +17,8 @@
 
 ## Overview
 
-A simple and effective Navigation to manage active states in navigation structures.
+A simple and effective Navigation to manage active states in navigation structures.  
+For Symfony integration, check out the [NavigationBundle](https://github.com/feskol/NavigationBundle).
 
 ## Features
 
